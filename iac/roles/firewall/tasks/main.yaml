@@ -1,4 +1,12 @@
-- name: add SSH port to UFW
+- name: Add deploy host to UFW
+  become: true
+  ufw:
+    rule: allow
+    src: {{ hostvars[inventory_hostname].vars.DEPLOY_HOST }}
+    port: ssh
+    proto: tcp
+
+- name: Add SSH port to UFW
   become: true
   ufw:
     rule: limit
@@ -11,7 +19,7 @@
     state: enabled
     policy: deny
 
-- name: add HTTP(S) port to UFW
+- name: Add HTTP(S) port to UFW
   become: true
   ufw:
     rule: allow
