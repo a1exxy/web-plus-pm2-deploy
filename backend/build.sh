@@ -5,7 +5,6 @@ CURRENT_DIR=$($DIRNAME $($READLINK -e "$0"))
 
 pushd $CURRENT_DIR
 
-set -a
-. ../.env
 npm i
+. ../.env
 PORT=$BACKEND_LOCAL_PORT npm run build
