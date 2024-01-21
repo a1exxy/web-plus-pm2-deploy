@@ -14,7 +14,7 @@ console.log(DEPLOY_USER, DEPLOY_HOST, DEPLOY_PATH, DEPLOY_REPO,  DEPLOY_REF)
 module.exports = {
   apps: [{
     name: 'api-service',
-    script: './dist/app.js',
+    script: './backend/dist/app.js',
   }],
 
   // Настройка деплоя
@@ -27,10 +27,10 @@ module.exports = {
       user: DEPLOY_USER,
       ref: DEPLOY_REF,
       repo: DEPLOY_REPO,
-      path: `${DEPLOY_PATH}/backend`,
+      path: `${DEPLOY_PATH}`,
       // 'post-setup': 'cd backend && npm i && npm run build',
       'pre-deploy-local': `scp ../.env ${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_PATH}/current`,
-      'pre-deploy': 'npm i && npm run build',
+      'pre-deploy': 'cd backend  && npm i && npm run build && cd ../frontend && npm i && npm run build',
       'post-deploy': 'pm2 startOrRestart backend/ecosystem.config.js --env production'
     },
   },

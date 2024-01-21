@@ -1,6 +1,6 @@
 - name: Copy github ssh key
   copy:
-    src: "{{ hostvars[inventory_hostname].vars.GITHUB_SSH_PRIVATE_KEY_FILE }}"
+    src: "{{ GITHUB_SSH_PRIVATE_KEY_FILE }}"
     dest: "~/.ssh/github"
     mode: 0600
 
