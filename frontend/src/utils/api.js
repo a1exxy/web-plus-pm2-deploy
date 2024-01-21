@@ -1,3 +1,4 @@
+require('dotenv').config({path: '../.env'})
 
 const getResponse = (res) => {
     return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
@@ -7,16 +8,16 @@ class Api {
     constructor(address) {
       this._address = address;
     }
-  
+
     setToken(token) {
       this._token = token;
     }
-  
-  
+
+
     getAppInfo() {
       return Promise.all([this.getCardList(), this.getUserInfo()]);
     }
-  
+
     getCardList() {
       return fetch(`${this._address}/cards`, {
         headers: {
@@ -25,7 +26,7 @@ class Api {
       })
       .then(getResponse)
     }
-  
+
     addCard({ name, link }) {
       return fetch(`${this._address}/cards`, {
         method: 'POST',
@@ -40,7 +41,7 @@ class Api {
       })
       .then(getResponse)
     }
-  
+
     removeCard(cardId) {
       return fetch(`${this._address}/cards/${cardId}`, {
         method: 'DELETE',
@@ -50,7 +51,7 @@ class Api {
         },
       }).then(getResponse)
     }
-  
+
     getUserInfo() {
       return fetch(`${this._address}/users/me`, {
         headers: {
@@ -60,7 +61,7 @@ class Api {
       })
       .then(getResponse)
     }
-  
+
     setUserInfo({ name, about }) {
       return fetch(`${this._address}/users/me`, {
         method: 'PATCH',
@@ -75,7 +76,7 @@ class Api {
       })
         .then(getResponse);
     }
-  
+
     setUserAvatar({ avatar }) {
       return fetch(`${this._address}/users/me/avatar`, {
         method: 'PATCH',
@@ -88,9 +89,9 @@ class Api {
         }),
       }).then(getResponse)
     }
-  
+
     changeLikeCardStatus(cardId, like) {
-      
+
       return fetch(`${this._address}/cards/${cardId}/likes`, {
         method: like ? 'PUT' : 'DELETE',
         headers: {
@@ -99,7 +100,7 @@ class Api {
         },
       }).then(getResponse)
     }
-  
+
     register(email, password) {
       return fetch(`${this._address}/signup`, {
         method: 'POST',
@@ -110,7 +111,7 @@ class Api {
       })
       .then(getResponse)
     }
-  
+
     login(email, password) {
       return fetch(`${this._address}/signin`, {
         method: 'POST',
@@ -126,7 +127,7 @@ class Api {
         return data;
       })
     }
-  
+
     checkToken(token) {
       return fetch(`${this._address}/users/me`, {
         method: 'GET',
@@ -138,8 +139,8 @@ class Api {
       .then(getResponse)
   }
   }
+
   // Замените на адрес вашего бэкенда
-  const api = new Api('http://localhost:3000');
-  
+  const api = new Api(`https://${process.env.REACT_APP_API_URL}` || 'http://localhost:3000');
+
   export default api;
-  
