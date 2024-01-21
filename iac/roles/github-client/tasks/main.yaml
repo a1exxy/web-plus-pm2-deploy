@@ -1,0 +1,15 @@
+- name: Copy github ssh key
+  copy:
+    src: "{{ hostvars[inventory_hostname].vars.GITHUB_SSH_PRIVATE_KEY_FILE }}"
+    dest: "~/.ssh/github"
+    mode: 0600
+
+- name: Copy github config
+  copy:
+    src: files/github.conf
+    dest: "~/.ssh/config"
+
+- name: Set github ssh fingerprint
+  shell: |
+    ssh-keygen -F github.com ||
+    ssh-keyscan -H github.com >> ~/.ssh/known_hosts

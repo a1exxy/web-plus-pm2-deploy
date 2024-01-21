@@ -1,0 +1,23 @@
+- name: add SSH port to UFW
+  become: true
+  ufw:
+    rule: limit
+    port: ssh
+    proto: tcp
+
+- name: Drop everything and enable UFW
+  become: true
+  ufw:
+    state: enabled
+    policy: deny
+
+- name: add HTTP(S) port to UFW
+  become: true
+  ufw:
+    rule: allow
+    port: "{{ item }}"
+    proto: tcp
+  loop:
+    - http
+    - https
+

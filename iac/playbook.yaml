@@ -1,0 +1,20 @@
+#- hosts: webapp
+- hosts: all
+  gather_facts: false
+  pre_tasks:
+    - name: Write the new instance host key to known hosts
+      connection: local
+      become: false
+      shell: |
+        ssh-keygen -F {{ hostvars[inventory_hostname].ansible_ssh_host }} ||
+        ssh-keyscan -H {{ hostvars[inventory_hostname].ansible_ssh_host }} >> ~/.ssh/known_hosts
+      register: known_hosts
+      changed_when: "'found' not in known_hosts.stdout"
+  roles:
+    - firewall
+    - nginx-host
+    - node-host
+    - role: github-client
+      tags: git
+    - role: mongo-host
+      tags: mongo

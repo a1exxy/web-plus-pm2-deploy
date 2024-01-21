@@ -1,0 +1,14 @@
+- name: Install packeges
+  become: true
+  apt:
+    pkg:
+      - nodejs
+      - npm
+    state: latest
+    update_cache: yes
+  tags: node
+
+- name: Install pm2
+  become: true
+  shell: npm i pm2 -g
+
