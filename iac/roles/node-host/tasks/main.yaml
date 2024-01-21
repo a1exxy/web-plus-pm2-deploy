@@ -11,4 +11,4 @@
 - name: Install pm2
   become: true
   shell: npm i pm2 -g
-
+  tags: node

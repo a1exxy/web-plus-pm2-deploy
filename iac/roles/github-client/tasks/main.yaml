@@ -8,6 +8,7 @@
   copy:
     src: files/github.conf
     dest: "~/.ssh/config"
+    mode: 0600
 
 - name: Set github ssh fingerprint
   shell: |

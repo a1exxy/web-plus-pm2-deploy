@@ -21,7 +21,8 @@ module.exports = {
       repo: DEPLOY_REPO,
       path: DEPLOY_PATH,
       'pre-deploy-local': `scp ../.env* ${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_PATH}/current`,
-      'pre-deploy': '. .env && cd frontend && npm i && REACT_APP_API_URL=$BACKEND_DOMAIN npm run build',
+      // 'pre-deploy': '. .env && cd frontend && echo "PWD=$PWD" && npm i && REACT_APP_API_URL=$BACKEND_DOMAIN npm run build',
+      'pre-deploy': 'frontend/build.sh',
       'post-deploy': 'echo "Deploy is ended."'
     },
   },

@@ -11,6 +11,6 @@ all:
     BACKEND_DOMAIN: "{{ lookup('ansible.builtin.env','BACKEND_DOMAIN') }}"
     CERTBOT_EMAIL: "{{ lookup('ansible.builtin.env','CERTBOT_EMAIL') }}"
     GITHUB_SSH_PRIVATE_KEY_FILE: "{{ lookup('ansible.builtin.env','GITHUB_SSH_PRIVATE_KEY_FILE') }}"
-    DEPLOY_HOST: "{{ lookup('ansible.builtin.env','DEPLOY_HOST') }}"
+    MGMT_HOST: "{{ lookup('ansible.builtin.env','MGMT_HOST') }}"
     BACKEND_LOCAL_PORT: "{{ lookup('ansible.builtin.env','BACKEND_LOCAL_PORT') }}"
 
