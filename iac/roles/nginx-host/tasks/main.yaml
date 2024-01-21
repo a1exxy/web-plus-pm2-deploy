@@ -1,0 +1,50 @@
+- name: Install packeges
+  become: true
+  apt:
+    pkg:
+      - nginx
+    state: latest
+    update_cache: yes
+
+- name: Set nginx config
+  become: true
+  template:
+    src: template/nginx.conf.j2
+    dest: /etc/nginx/sites-available/default
+  tags: run_certbot
+
+- name: Reload nginx
+  become: true
+  service:
+    name: nginx
+    state: reloaded
+  tags: run_certbot
+
+- name: Install certbot
+  become: true
+  shell: snap install --classic certbot
+
+- name: Create symbolic link
+  become: true
+  file:
+    src: "/snap/bin/certbot"
+    dest: "/usr/bin/certbot"
+    state: link
+
+- name: Run certbot
+  become: true
+  shell: "certbot --nginx -d {{ hostvars[inventory_hostname].vars.FRONT_DOMAIN }},{{ hostvars[inventory_hostname].vars.BACKEND_DOMAIN }} --email {{ hostvars[inventory_hostname].vars.CERTBOT_EMAIL }} --agree-tos -n"
+  tags: run_certbot
+
+- name: Add certbot to crontab
+  become: true
+  cron:
+    name: "check dirs"
+    minute: "30"
+    hour: "2"
+#    daily: "*"
+#    monthly: "*"
+    weekday: "1"
+    user: root
+    job: "/usr/bin/certbot renew 2>&1 | logger -i -t CERTBOT_RENEW"
+    cron_file: certbot
