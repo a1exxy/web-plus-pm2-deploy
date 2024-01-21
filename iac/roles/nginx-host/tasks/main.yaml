@@ -1,3 +1,7 @@
+- debug:
+    msg: "{{ ansible_user }} {{ FRONT_DOMAIN }}"
+  tags: debug
+
 - name: Install packeges
   become: true
   apt:
@@ -5,6 +9,11 @@
       - nginx
     state: latest
     update_cache: yes
+
+- name: Add app folder
+  file:
+    path: "/home/{{ ansible_user }}/app"
+    state: directory
 
 - name: Set nginx config
   become: true
@@ -33,7 +42,7 @@
 
 - name: Run certbot
   become: true
-  shell: "certbot --nginx -d {{ hostvars[inventory_hostname].vars.FRONT_DOMAIN }},{{ hostvars[inventory_hostname].vars.BACKEND_DOMAIN }} --email {{ hostvars[inventory_hostname].vars.CERTBOT_EMAIL }} --agree-tos -n"
+  shell: "certbot --nginx -d {{ FRONT_DOMAIN }},{{ BACKEND_DOMAIN }} --email {{ CERTBOT_EMAIL }} --agree-tos -n"
   tags: run_certbot
 
 - name: Add certbot to crontab

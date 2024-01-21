@@ -2,7 +2,7 @@
   become: true
   ufw:
     rule: allow
-    src: {{ hostvars[inventory_hostname].vars.DEPLOY_HOST }}
+    src: "{{ DEPLOY_HOST }}"
     port: ssh
     proto: tcp
 
