@@ -30,7 +30,7 @@ module.exports = {
       path: `${DEPLOY_PATH}`,
       // 'post-setup': 'cd backend && npm i && npm run build',
       'pre-deploy-local': `scp ../.env ${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_PATH}/current`,
-      'pre-deploy': 'cd backend  && npm i && npm run build && cd ../frontend && npm i && npm run build',
+      'pre-deploy': 'cd backend  && npm i && npm run build',
       'post-deploy': 'pm2 startOrRestart backend/ecosystem.config.js --env production'
     },
   },

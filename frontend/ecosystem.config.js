@@ -12,35 +12,17 @@ console.log(DEPLOY_USER, DEPLOY_HOST, DEPLOY_PATH, DEPLOY_REPO,  DEPLOY_REF)
 
 
 module.exports = {
-  // apps: [{
-  //   name: 'api-service',
-  //   script: './backend/dist/app.js',
-  //   // node_args : '-r dotenv/config',
-  // }],
-  // Настройка деплоя
+//Настройка деплоя
   deploy: {
     production: {
-      // user: 'user',
-      // host: [],
-      // SSH key path, default to $HOME/.ssh
-      // key: "/path/to/some.pem",
-      // ssh_options: "StrictHostKeyChecking=no",
-      // ref: 'origin/master',
-      // path: '/home/user/app',
       user: DEPLOY_USER,
       host: DEPLOY_HOST,
       ref: DEPLOY_REF,
       repo: DEPLOY_REPO,
       path: DEPLOY_PATH,
-      // 'pre-deploy-local': `scp ./.env* ${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_PATH}/current/backend`,
-      // 'pre-deploy-local': `scp ../.env* ${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_PATH}`,
-      // 'pre-deploy': 'echo $PWD $HOSTNAME $DEPLOY_REPO > /tmp/test.txt',
-      // 'pre-deploy': `scp ./.env* ${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_PATH}`,
-      'post-setup': 'cd backend && npm i && npm run build',
-      // 'pre-deploy':
-      // 'post-deploy': 'npm i && npm run build',
       'pre-deploy-local': `scp ../.env* ${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_PATH}/current`,
-      'post-deploy': 'pm2 startOrRestart backend/ecosystem.config.js --env production'
+      'pre-deploy': '. .env && cd frontend && npm i && REACT_APP_API_URL=$BACKEND_DOMAIN npm run build',
+      'post-deploy': 'echo "Deploy is ended."'
     },
   },
 };
