@@ -15,6 +15,10 @@
     path: "/home/{{ ansible_user }}/app"
     state: directory
 
+- name: Add www-data to user group
+  become: true
+  shell: usermod -aG {{ ansible_user }} www-data
+
 - name: Set nginx config
   become: true
   template:

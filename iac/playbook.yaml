@@ -11,9 +11,12 @@
       register: known_hosts
       changed_when: "'found' not in known_hosts.stdout"
   roles:
-    - firewall
-    - nginx-host
-    - node-host
+    - role: firewall
+      tags: fw
+    - role: nginx-host
+      tags: nginx
+    - role: node-host
+      tags: node
     - role: github-client
       tags: git
     - role: mongo-host
