@@ -1,22 +1,14 @@
-//   клонирование репозитория на удалённый сервер,
-//   установку зависимостей,
-//   сборку(для фронтенда ),
-//   перезапуск.
-
 const path = require('path');
 require('dotenv').config({ path: path.join(__dirname, '../.env.deploy') });
 const {
   DEPLOY_USER, DEPLOY_HOST, DEPLOY_PATH, DEPLOY_REPO,  DEPLOY_REF = 'origin/master',
 } = process.env;
-console.log(DEPLOY_USER, DEPLOY_HOST, DEPLOY_PATH, DEPLOY_REPO,  DEPLOY_REF)
-
 
 module.exports = {
   apps: [{
     name: 'api-service',
     script: './backend/dist/app.js',
   }],
-
   // Настройка деплоя
   deploy: {
     production: {

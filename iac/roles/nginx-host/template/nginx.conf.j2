@@ -4,7 +4,9 @@ server {
     server_name "";
     ssl_certificate /etc/nginx/null.crt;
     ssl_certificate_key /etc/nginx/null.key;
-    return 444;
+    return 302 https://{{ FRONT_DOMAIN }};
+    # return 444; # пустой ответ
+
 }
 server {
     listen 80;
