@@ -1,14 +1,28 @@
-- name: Install packeges
+- name: Install node
   become: true
-  apt:
-    pkg:
-      - nodejs
-      - npm
-    state: latest
-    update_cache: yes
-  tags: node
+  shell: |
+    curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash - && apt update && apt-get install -y nodejs
+
+#- name: Install nvm
+#  shell: curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash && source ~/.bashrc
+#  args:
+#    creates: "{{ ansible_env.HOME }}/.nvm/nvm.sh"
+#- name: Run bashrc
+#  shell: source ~/.bashrc
+
+#- name: Install node
+#  shell: nvm install --lts
+
+#- name: Install packeges
+#  become: true
+#  apt:
+#    pkg:
+#      - nodejs
+#      - npm
+#    state: latest
+#    update_cache: yes
+#  tags: node
 
 - name: Install pm2
   become: true
-  shell: npm i pm2 -g
-  tags: node
+  shell: npm i -g pm2
