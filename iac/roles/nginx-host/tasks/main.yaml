@@ -16,6 +16,10 @@
   become: true
   shell: usermod -aG {{ ansible_user }} www-data
 
+- name: Generate null cert
+  become: true
+  shell: openssl req -x509 -newkey rsa:2048 -keyout /etc/nginx/null.key -out /etc/nginx/null.crt -sha256 -days 3650 -nodes -subj "/CN=null"
+
 - name: Set nginx config
   become: true
   template:
@@ -58,3 +62,4 @@
     user: root
     job: "/usr/bin/certbot renew 2>&1 | logger -i -t CERTBOT_RENEW"
     cron_file: certbot
+
