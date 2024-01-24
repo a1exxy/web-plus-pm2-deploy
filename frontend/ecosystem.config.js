@@ -10,7 +10,6 @@ const {
 } = process.env;
 console.log(DEPLOY_USER, DEPLOY_HOST, DEPLOY_PATH, DEPLOY_REPO,  DEPLOY_REF)
 
-
 module.exports = {
 //Настройка деплоя
   deploy: {

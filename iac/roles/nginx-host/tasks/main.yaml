@@ -1,6 +1,3 @@
-- debug:
-    msg: "{{ ansible_user }} {{ FRONT_DOMAIN }}"
-  tags: debug
 
 - name: Install packeges
   become: true
