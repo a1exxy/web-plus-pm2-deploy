@@ -11,7 +11,7 @@ import routes from './routes';
 
 const { PORT = '3000', FRONT_DOMAIN } = process.env;
 var corsOptions = {
-  origin: `http://${FRONT_DOMAIN}`,
+  origin: `https://${FRONT_DOMAIN}`,
 }
 const app = express();
 mongoose.connect(DB_ADDRESS);
