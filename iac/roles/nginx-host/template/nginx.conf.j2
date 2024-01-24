@@ -1,6 +1,10 @@
 server {
     listen 80 default_server;
-    return 404;
+    listen 443 ssl default_server;
+    server_name "";
+    ssl_certificate /etc/nginx/null.crt;
+    ssl_certificate_key /etc/nginx/null.key;
+    return 444;
 }
 server {
     listen 80;
