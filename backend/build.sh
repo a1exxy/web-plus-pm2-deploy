@@ -9,5 +9,5 @@ which npm
 npm i
 . ../.env
 export PORT=$BACKEND_LOCAL_PORT
-export BACKEND_DOMAIN
+export FRONT_DOMAIN
 npm run build
